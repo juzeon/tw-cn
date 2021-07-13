@@ -2,6 +2,7 @@ import {OpenCC} from 'opencc'
 import express from 'express'
 import bodyParser from "body-parser"
 
+require('dotenv').config()
 let app = express()
 let urlencodedParser = bodyParser.urlencoded({extended: false})
 
@@ -44,6 +45,6 @@ app.post('/trans', urlencodedParser, (req, res) => {
     }
     res.json({text: text}).end()
 })
-let server = app.listen(9999, () => {
-    console.log('Server started.')
+let server = app.listen(process.env.PORT, () => {
+    console.log('Server started at port ' + process.env.PORT)
 })

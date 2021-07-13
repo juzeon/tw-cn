@@ -10,12 +10,14 @@ export class InputBox extends React.Component {
     }
     render() {
         return (
-            <Box>
+            <Box my={2}>
                 <TextField fullWidth={true}
                            multiline={true}
                            placeholder={'在此输入要转换的文本'}
                            value={this.props.text}
                            onChange={this.handleTextChange.bind(this)}
+                           inputProps={{style:{minHeight:'150px'}}}
+                           variant={"outlined"}
                 />
             </Box>
         )

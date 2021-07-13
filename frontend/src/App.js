@@ -9,7 +9,7 @@ import {ButtonLine} from "./ButtonLine"
 import axios from 'axios'
 import qs from 'qs'
 
-axios.defaults.baseURL=process.env.API_BASE_URL
+axios.defaults.baseURL=process.env.REACT_APP_API_BASE_URL
 
 export class App extends React.Component {
     constructor() {
@@ -65,13 +65,13 @@ export class App extends React.Component {
     }
     render() {
         return (
-            <Box mt={2}>
+            <Box mt={2} mx={1}>
                 <Grid container justify={"center"}>
                     <Grid container item xs={12} sm={6}>
                         <Box width={1}>
                             <Card>
                                 <CardContent>
-                                    <Typography variant={'h5'}>正体-简体线上转换</Typography>
+                                    <Typography variant={'h5'}>繁体-简体线上转换</Typography>
                                     <InputBox text={this.state.text} onTextChange={this.onTextChange.bind(this)}/>
                                     <OptionSelector onChange={this.onWritingIndexChange.bind(this)}
                                                     index={this.state.writing}
