@@ -9,60 +9,76 @@ import {ButtonLine} from "./ButtonLine"
 import axios from 'axios'
 import qs from 'qs'
 
-axios.defaults.baseURL=process.env.REACT_APP_API_BASE_URL
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL
 
 export class App extends React.Component {
     constructor() {
-        super();
-        this.state={
-            alertOpen:false,
-            text:'',
-            writing:localStorage.getItem('trans-writing') || 0,
-            speaking:localStorage.getItem('trans-speaking') || 0
+        super()
+        this.state = {
+            successAlertOpen: false,
+            errorAlertOpen: false,
+            successAlertText: '',
+            text: '',
+            writing: localStorage.getItem('trans-writing') || 0,
+            speaking: localStorage.getItem('trans-speaking') || 0
         }
     }
-    onCopy(){
+
+    onCopy() {
         navigator.clipboard.writeText(this.state.text)
         this.setState({
-            alertOpen:true
+            successAlertText: '已复制到剪贴板',
+            successAlertOpen: true
         })
     }
-    async onPaste(){
-        if(navigator.clipboard.readText) {
+
+    async onPaste() {
+        if (navigator.clipboard.readText) {
             let text = await navigator.clipboard.readText()
             this.setState({
+                successAlertText: '已从剪贴板读取',
+                successAlertOpen: true,
                 text: text
+            })
+        } else {
+            this.setState({
+                errorAlertOpen: true
             })
         }
     }
-    async onTrans(){
-        let resp=axios.post('/trans?'+qs.stringify({
-            writing:this.state.writing,
-            speaking:this.state.speaking
-        }),qs.stringify({
-            text:this.state.text
+
+    async onTrans() {
+        let resp = axios.post('/trans?' + qs.stringify({
+            writing: this.state.writing,
+            speaking: this.state.speaking
+        }), qs.stringify({
+            text: this.state.text
         }))
         this.setState({
-            text:(await resp).data.text
+            text: (await resp).data.text
         })
     }
-    onTextChange(text){
+
+    onTextChange(text) {
         this.setState({
-            text:text
+            text: text
         })
     }
-    onWritingIndexChange(index){
-        localStorage.setItem('trans-writing',index)
+
+    onWritingIndexChange(index) {
+        localStorage.setItem('trans-writing', index)
         this.setState({
-            writing:index
+            writing: index
         })
     }
-    onSpeakingIndexChange(index){
-        localStorage.setItem('trans-speaking',index)
+
+    onSpeakingIndexChange(index) {
+        localStorage.setItem('trans-speaking', index)
         this.setState({
-            speaking:index
+            speaking: index
         })
     }
+
     render() {
         return (
             <Box mt={2} mx={1}>
@@ -88,8 +104,16 @@ export class App extends React.Component {
                         </Box>
                     </Grid>
                 </Grid>
-                <Snackbar autoHideDuration={1000} open={this.state.alertOpen} onClose={()=>{this.setState({alertOpen:false})}}>
-                    <MuiAlert elevation={6} variant={"filled"} severity={"success"}>已复制到剪切板</MuiAlert>
+                <Snackbar autoHideDuration={1000} open={this.state.successAlertOpen} onClose={() => {
+                    this.setState({successAlertOpen: false})
+                }}>
+                    <MuiAlert elevation={6} variant={"filled"}
+                              severity={"success"}>{this.state.successAlertText}</MuiAlert>
+                </Snackbar>
+                <Snackbar autoHideDuration={1000} open={this.state.errorAlertOpen} onClose={() => {
+                    this.setState({errorAlertOpen: false})
+                }}>
+                    <MuiAlert elevation={6} variant={"filled"} severity={"error"}>您的浏览器不支援读取剪贴板</MuiAlert>
                 </Snackbar>
             </Box>
         )
