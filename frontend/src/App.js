@@ -8,8 +8,9 @@ import {OptionSelector} from "./OptionSelector"
 import {ButtonLine} from "./ButtonLine"
 import axios from 'axios'
 import qs from 'qs'
-
-axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL
+axios.get('config.json').then((resp)=>{
+    axios.defaults.baseURL = resp.data.API_BASE_URL
+})
 
 export class App extends React.Component {
     constructor() {
