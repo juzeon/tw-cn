@@ -2,6 +2,7 @@ import {OpenCC} from 'opencc'
 import express from 'express'
 import bodyParser from "body-parser"
 
+
 require('dotenv').config()
 let app = express()
 let urlencodedParser = bodyParser.urlencoded({extended: false})
