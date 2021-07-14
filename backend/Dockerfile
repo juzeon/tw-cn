@@ -1,4 +1,4 @@
-FROM node:slim
+FROM nikolaik/python-nodejs:python3.9-nodejs14-alpine
 COPY . /app/
 WORKDIR /app/
 RUN cp .env.example .env
