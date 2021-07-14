@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:slim
 COPY . /app/
 WORKDIR /app/
 RUN cp .env.example .env
