@@ -1,6 +1,7 @@
-FROM nikolaik/python-nodejs:python3.9-nodejs14-alpine
+FROM node:lts-alpine
 COPY . /app/
 WORKDIR /app/
+RUN apk add python make gcc g++
 RUN cp .env.example .env
 RUN set -x ; rm -rf package-lock.json && npm i --loglevel verbose
 RUN tsc
