@@ -1,0 +1,26 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args: [ '-c','docker login -u juzheng -p $$PASSWORD' ]
+    secretEnv: [ 'PASSWORD' ]
+
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'juzheng/tw-cn-backend', 'backend/' ]
+    timeout: 500s
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push juzheng/tw-cn-backend']
+
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'juzheng/tw-cn-frontend', 'frontend/' ]
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push juzheng/tw-cn-frontend' ]
+    timeout: 500s
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/90558111845/secrets/DOCKER_PASSWORD_SECRET_NAME
+      env: 'PASSWORD'
