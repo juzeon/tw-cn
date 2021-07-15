@@ -13,4 +13,4 @@ ENV API_BASE_URL=http://localhost:9999/
 CMD echo "{ \
             \"API_BASE_URL\": \"$API_BASE_URL\" \
           } \
-" > config.json && nginx -g daemon off;
+" > config.json && nginx -g "daemon off;"
