@@ -22,5 +22,5 @@ steps:
 
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_NUMBER/secrets/DOCKER_PASSWORD_SECRET_NAME
+    - versionName: projects/$PROJECT_NUMBER/secrets/DOCKER_PASSWORD_SECRET_NAME/versions/1
       env: 'PASSWORD'
