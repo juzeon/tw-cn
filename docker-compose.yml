@@ -8,7 +8,7 @@ services:
   frontend:
     image: 'juzheng/tw-cn-frontend'
     environment:
-      - "API_BASE_URL=https://tw-cn.skyju.cc/backend/"
+      - "API_BASE_URL=/backend/"
     expose:
       - 80
     restart: unless-stopped
